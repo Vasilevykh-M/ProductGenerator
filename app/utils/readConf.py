@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4ebd62bb919dd5396bc653cfe21be0ddff22a7ab343593051472b37b60c67643
-size 232
+import os
+
+import toml
+
+def read_conf(file_name):
+
+    if not os.path.exists(file_name):
+        print("Файл не найден")
+
+    with open(file_name, 'r') as f:
+        config = toml.load(f)
+        return config

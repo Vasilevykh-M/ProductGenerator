@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:72bfeeef44ecae018a7a0cce1566c6c08a62c1f5fe3c450f51ac0c4d2e19ec82
-size 341
+#!/bin/sh
+
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1C1smXa0NJNYmg-guKOku6pwqEgMVGm3x' -o remover.onnx
+
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Zj-NoVVt88kdiIPbeeaDkdZbUF4ilkjQ' -o clip.onnx
+
+
+# Launch nginx
+nginx &
+
+# Launch app
+fastapi run /code/app/main.py --port 8500

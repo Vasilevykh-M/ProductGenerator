@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0af04815b2e35d4dc0d40042dae7223015ab623d2faa436ef0f0c6e0b99e2fc9
-size 205
+from app.model.inference.infernece import Model
+
+
+class TrtModel(Model):
+
+    def __init__(self, config):
+        super().__init__(config)
+
+
+    def __call__(self, dict):
+        super.__call__()

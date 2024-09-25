@@ -1,3 +1,109 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1579f6b98536de4a3ae542d2e7dcdaa6b463055d7066e06472e15d699c334048
-size 1892
+/* Основные стили для контейнера */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Стили для изображения */
+.result-image {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Стили для drag-and-drop области */
+.border {
+  border: 2px dashed #007bff;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.border p {
+  margin: 0;
+  color: #007bff;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Стили для имени загруженного файла */
+p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Стили для кнопок */
+.small-btn {
+  width: 200px;
+  margin: 10px auto;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+button[disabled] {
+  background-color: #cccccc !important;
+}
+
+/* Бегунки с подписями */
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.me-2, .ms-2 {
+  margin-inline-end: 0.5rem;
+  margin-inline-start: 0.5rem;
+}
+
+.range-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.range-label.float-right {
+  float: right;
+}
+
+/* Дополнительные стили для компактности формы */
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-container .form-group {
+  flex: 1 1 45%;
+  margin-bottom: 1rem;
+}
+
+.form-container .form-group:nth-child(odd) {
+  margin-right: 1rem;
+}
+
+/* Центрирование кнопок */
+.text-center .small-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Увеличение верхнего и нижнего отступа для кнопок */
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+/* Стили для фона и положения объекта */
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}

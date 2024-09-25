@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8524b7bb774f9932d5adb39da9a72806ab5b5fb19b38c447caa76c74fc8f579c
-size 814
+from transformers import AutoProcessor, BlipForConditionalGeneration
+
+class BlipModel:
+    def __init__(self, data_label):
+        # self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
+        self.model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+        self.processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+
+    def __call__(self, image):
+        inputs = self.processor(images=image, return_tensors="pt").to(self.device)
+        pixel_values = inputs.pixel_values
+
+        generated_ids = self.model.generate(pixel_values=pixel_values, max_length=50)
+        generated_caption = self.processor.batch_decode(generated_ids, skip_special_tokens=True)
+        return generated_caption

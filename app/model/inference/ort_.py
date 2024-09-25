@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0e82e7da2f23d7e927ab9269e6e3e5da60dd56239c6baac2b4beee75c06f0ce4
-size 499
+import onnxruntime as ort
+import os
+
+from app.model.inference.infernece import Model
+
+
+class OrtModel(Model):
+    def __init__(self, config):
+        super().__init__(config)
+
+        if not os.path.exists(config["model"]):
+            print("Файл не найден")
+
+        self.ort_sess = ort.InferenceSession(config["model"])
+        self.output = config["output"]
+
+    def __call__(self, dict):
+        super.__call__()
+        return self.ort_sess.run(self.output, dict)

@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:46e3c344550d71c8490890f12e13006c181b72278c2eecdae60a503360820182
-size 357
+[database]
+url = "localhost"
+port = 5432
+user = "postgres"
+password = "postgres"
+database = "generationApp"
+[clip]
+engine = "ort"
+model = "app/model/weights/clip.onnx"
+output = ["LOGITS_PER_IMAGE", "LOGITS_PER_TEXT"]
+
+[background]
+engine = "ort"
+model = "app/model/weights/remover.onnx"
+
+[inpainting]
+engine = "ort"
+
+[blip]
+engine = "ort"

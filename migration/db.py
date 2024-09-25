@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:40d3969fd948ba92f68545d72ce50a300a339ec686a29dd553d4447696d4a683
-size 521
+from sqlalchemy import create_engine, Column, Integer, String, Text, ForeignKey
+from sqlalchemy.orm import declarative_base
+
+engine = create_engine('postgresql://postgres@localhost/generationApp')
+
+Base = declarative_base()
+
+
+class Promt(Base):
+    __tablename__ = "promt"
+
+    id = Column(Integer, primary_key=True)
+    name_object = Column(String(255), nullable=False)
+    promt = Column(String(255), nullable=False)
+    scale = Column(Integer, nullable=False)
+    y_pos = Column(Integer, nullable=False)

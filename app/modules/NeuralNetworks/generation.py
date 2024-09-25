@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d3fb66b541657a57e7a6999a66a5c2c831d42d19b3552e93c8765450b29da5e4
-size 664
+from app.model.generation_model import InpaintingModel
+from app.model.gpt_tune import DescriptionModel
+from app.modules.NeuralNetworks.background_remover_model import BackGroundRemover_
+
+
+class Generator:
+    def __init__(self, preprocessor, inpainting, blip):
+        self.preprocessor = BackGroundRemover_(preprocessor)
+        self.inpainting = InpaintingModel(inpainting)
+        self.blip = DescriptionModel(blip)
+
+    def __call__(self, image, y_pos, scale, promt, name):
+        image, mask = self.preprocessor(image, scale, y_pos)
+        text = self.blip(name)
+        result = self.inpainting(image, mask, promt)
+        return image, text

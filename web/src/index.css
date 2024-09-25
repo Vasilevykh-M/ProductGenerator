@@ -1,3 +1,94 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2e3d5626fc66b52e214a7538e1839ede7c5ddffc5a2124ad7607cd1c33e00605
-size 1653
+/* Стили для фона страницы */
+body {
+  background-image: url('https://www.example.com/path-to-background.jpg'); /* Заменить на ссылку твоего фонового изображения */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон для контента */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: bold;
+}
+
+.border {
+  border: 2px dashed #007bff;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+p {
+  color: #555;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.generated-result {
+  text-align: center;
+}
+
+.generated-result img {
+  margin-top: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+
+.generated-result p {
+  color: #333;
+  font-weight: bold;
+  margin-top: 10px;
+}
