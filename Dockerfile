@@ -1,29 +1,67 @@
-FROM nvcr.io/nvidia/driver:550.54.15-ubuntu22.04
+# Базовый образ с поддержкой NVIDIA
+FROM nvidia/cuda:11.7.1-cudnn8-runtime-ubuntu20.04
 
-# Install packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        git python3 python3-pip nginx \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Установка необходимых системных зависимостей
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    nginx \
+    wget \
+    curl \
+    gnupg2 \
+    ca-certificates \
+    lsb-release \
+    software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install python requirements
-COPY ./requirements.txt /code/requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+# Установка Node.js для сборки React-приложения
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Nginx configuration
-COPY ./nginx.conf /etc/nginx/nginx.conf
+# Установка рабочей директории для приложения
+WORKDIR /app
 
-# Copy backend
-COPY ./config /code/config
-COPY ./app /code/app
+# --- Этап 1: Сборка фронтенда ---
+# Копируем файлы фронтенда
+COPY frontend/package*.json ./frontend/
 
-# Copy frontend
-RUN rm -r /var/www
-COPY ./web /var/www
+# Переходим в директорию фронтенда и устанавливаем зависимости
+WORKDIR /app/frontend
+RUN npm install
 
-# Copy entrypoint
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Копируем исходный код фронтенда и создаем production-сборку
+COPY frontend/ ./
+RUN npm run build
 
-# Entrypoint
-WORKDIR /code
-ENTRYPOINT ["/entrypoint.sh"]
+# --- Этап 2: Установка бэкенда ---
+WORKDIR /app/backend
+
+# Копируем файл зависимостей Python
+COPY backend/requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Копируем исходный код бэкенда
+COPY backend/ /app/backend/
+
+# Скачивание моделей (если требуются)
+RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1C1smXa0NJNYmg-guKOku6pwqEgMVGm3x' -O /app/backend/remover.onnx && \
+    wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Zj-NoVVt88kdiIPbeeaDkdZbUF4ilkjQ' -O /app/backend/clip.onnx
+
+# --- Этап 3: Настройка Nginx и финальные действия ---
+WORKDIR /app
+
+# Копируем конфигурационный файл Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Копируем собранные статические файлы фронтенда в директорию для Nginx
+RUN mkdir -p /usr/share/nginx/html
+COPY --from=frontend-build /app/frontend/build /usr/share/nginx/html
+
+# Копируем скрипт для запуска всех сервисов
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Экспонирование порта 80
+EXPOSE 80
+
+# Запуск сервиса
+CMD ["/app/entrypoint.sh"]

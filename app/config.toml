@@ -14,7 +14,7 @@ engine = "ort"
 model = "app/model/weights/remover.onnx"
 
 [inpainting]
-engine = "ort"
+engine = "torch"
 
-[blip]
-engine = "ort"
+[gpt]
+engine = "torch"

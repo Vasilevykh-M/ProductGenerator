@@ -1,12 +1,7 @@
 #!/bin/sh
 
-wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1C1smXa0NJNYmg-guKOku6pwqEgMVGm3x' -o remover.onnx
-
-wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Zj-NoVVt88kdiIPbeeaDkdZbUF4ilkjQ' -o clip.onnx
-
-
-# Launch nginx
+# Запуск Nginx для обслуживания фронтенда
 nginx &
 
-# Launch app
-fastapi run /code/app/main.py --port 8500
+# Запуск FastAPI (Uvicorn) с поддержкой GPU
+uvicorn app.backend.main:app --host 0.0.0.0 --port 8500 --reload
